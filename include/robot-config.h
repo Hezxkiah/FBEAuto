@@ -11,7 +11,9 @@ extern motor rightFrontM;
 extern motor rightBackM;
 extern digital_out airFist;
 extern motor_group rightDrive;
+extern motor_group leftDrive;
 extern distance DSensor;
+extern inertial IneSen;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
