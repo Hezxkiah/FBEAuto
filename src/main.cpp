@@ -27,7 +27,7 @@ using namespace vex;
 
 
 //Moving forward right gear train function
-void moveFWD_Right(int howFar,int howFast)
+void moveFWD(int howFar,int howFast)
 {
   //Resets the posistion of the right front and back motors
   rightFrontM.resetPosition();
@@ -55,43 +55,39 @@ void moveFWD_Right(int howFar,int howFast)
     }
     else
     {
-      leftFrontM.spin(fwd,howFast,velocityUnits::pct);
-      leftBackM.spin(fwd,howFast,velocityUnits::pct);
-      rightFrontM.spin(fwd,howFast,velocityUnits::pct);
-      rightBackM.spin(fwd,howFast,velocityUnits::pct);
+      leftFrontM.spin(forward,howFast,velocityUnits::pct);
+      leftBackM.spin(forward,howFast,velocityUnits::pct);
+      rightFrontM.spin(forward,howFast,velocityUnits::pct);
+      rightBackM.spin(forward,howFast,velocityUnits::pct);
     }
   }
 }
 
-//Moving forward left gear train function
+//Turning left function
+void turnL(int turnLD,int turnLS)
+{
+  IneSen.resetRotation();
+  while(fabs(IneSen.rotation(degrees)) < -turnLD)
+  {
+    rightDrive.spin(reverse,turnLS,velocityUnits::pct);
+    leftDrive.spin(forward,turnLS,velocityUnits::pct);
+  }
+  rightDrive.stop(brake);
+  leftDrive.stop(brake);
+}
 
-
-
-// //Turning left function
-// void turnL(int turnLD,int turnLS)
-// {
-//   IneSen.resetRotation();
-//   while(fabs(IneSen.rotation(degrees)) < -turnLD)
-//   {
-//     leftMotor.spin(reverse,turnLS,velocityUnits::pct);
-//     rightMotor.spin(fwd,turnLS,velocityUnits::pct);
-//   }
-//   leftMotor.stop(brake);
-//   rightMotor.stop(brake);
-// }
-
-// //Turning right function
-// void turnR(int turnRD, int turnRS)
-// {
-//   IneSen.resetRotation();
-//   while(fabs(IneSen.rotation(degrees)) < turnRD)
-//   {
-//     leftMotor.spin(forward,turnRS,velocityUnits::pct);
-//     rightMotor.spin(reverse,turnRS,velocityUnits::pct);
-//   }
-//   leftMotor.stop(brake);
-//   rightMotor.stop(brake);
-// }
+//Turning right function
+void turnR(int turnLD,int turnLS)
+{
+  IneSen.resetRotation();
+  while(fabs(IneSen.rotation(degrees)) < -turnLD)
+  {
+    rightDrive.spin(forward,turnLS,velocityUnits::pct);
+    leftDrive.spin(reverse,turnLS,velocityUnits::pct);
+  }
+  rightDrive.stop(brake);
+  leftDrive.stop(brake);
+}
 
 
 //MAIN PROGRAM
@@ -109,10 +105,10 @@ int main()
  //Rests left and right rotation
  rightDrive.resetPosition();
  leftDrive.resetPosition();
- //Continues to drive forward
+ 
+ //Actual Drive Portion
  while (1)
  {
-   //Makes sure to not do a full 180...(THIS MIGHT BE THE PROBLEM BUT DON'T CHANGE)
-   moveFWD_Right(343*5,15);
+   moveFWD(343*5,15);
  }
 }
