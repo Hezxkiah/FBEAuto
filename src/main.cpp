@@ -1,24 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       C:\Users\hezek                                            */
-/*    Created:      Mon Jan 29 2024                                           */
-/*    Description:  V5 project                                                */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
-
-
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// leftMotor            motor         3               
-// rightMotor           motor         2               
-// IneSen               inertial      1               
-// DSensor              distance      10              
-// DSensor2             distance      20              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-
-
 #include "vex.h"
 #include "math.h"
 
