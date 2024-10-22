@@ -17,8 +17,8 @@ motor rightBackM = motor(PORT4, ratio18_1, true);
 digital_out airFist = digital_out(Brain.ThreeWirePort.A);
 motor_group rightDrive(rightFrontM, rightBackM);
 motor_group leftDrive(leftBackM, leftFrontM);
-distance DSensor;
-inertial IneSen;
+inertial IneSen = inertial(PORT10);
+
 // VEXcode generated functions
 bool RemoteControlCodeEnabled = true;
 
