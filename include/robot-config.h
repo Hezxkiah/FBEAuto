@@ -5,13 +5,10 @@ extern brain Brain;
 // VEXcode devices
 extern motor IntakeMotor;
 extern controller Controller1;
-extern motor leftFrontM;
-extern motor leftBackM;
-extern motor rightFrontM;
-extern motor rightBackM;
-extern digital_out airFist;
-extern motor_group rightDrive;
-extern motor_group leftDrive;
+extern digital_out airFirst;
+extern motor stakeMotor;
+extern motor_group leftDriveT;
+extern motor_group rightDriveT;
 extern inertial IneSen;
 
 /**

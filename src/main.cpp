@@ -4,68 +4,82 @@
 
 using namespace vex;
 
+int turnS;
+
+//Grabbing information
+int information()
+{
+  //Prints Information
+  while(1)
+  {
+    Brain.Screen.setCursor(1,1);
+    Brain.Screen.print("Rotation: ",IneSen.rotation(degrees));
+    Brain.Screen.setCursor(1,2);
+    Brain.Screen.print("Heading: ",IneSen.heading(degrees));
+  }
+}
+
 
 //Moving forward right gear train function
 void moveFWD(int howFar,int howFast)
 {
   //Resets the posistion of the right front and back motors
-  rightFrontM.resetPosition();
-  rightBackM.resetPosition();
+  leftDriveT.resetPosition();
+  rightDriveT.resetPosition();
 
   //Checks to make sure that the robot drives straight
-  while(rightDrive.position(degrees) && leftDrive.position(degrees) < howFar)
+  while(rightDriveT.position(degrees) && leftDriveT.position(degrees) < howFar)
   {
     IneSen.resetRotation();
     //If vere left
     if((IneSen.rotation(degrees)) < 0 && (IneSen.rotation(degrees)) > -91)
     {
-      leftFrontM.spin(forward,5,velocityUnits::pct);
-      leftBackM.spin(forward,5,velocityUnits::pct);
-      rightFrontM.spin(reverse,5,velocityUnits::pct);
-      rightBackM.spin(reverse,5,velocityUnits::pct);
+      leftDriveT.spin(forward,5,velocityUnits::pct);
+      rightDriveT.spin(reverse,5,velocityUnits::pct);
     }
     //If vere right
     else if ((IneSen.rotation(degrees)) > 0 && (IneSen.rotation(degrees)) < 91)
     {
-      leftFrontM.spin(reverse,5,velocityUnits::pct);
-      leftBackM.spin(reverse,5,velocityUnits::pct);
-      rightFrontM.spin(forward,5,velocityUnits::pct);
-      rightBackM.spin(forward,5,velocityUnits::pct);
+      leftDriveT.spin(reverse,5,velocityUnits::pct);
+      rightDriveT.spin(forward,5,velocityUnits::pct);
     }
+    //Go Straight
     else
     {
-      leftFrontM.spin(forward,howFast,velocityUnits::pct);
-      leftBackM.spin(forward,howFast,velocityUnits::pct);
-      rightFrontM.spin(forward,howFast,velocityUnits::pct);
-      rightBackM.spin(forward,howFast,velocityUnits::pct);
+      leftDriveT.spin(forward,howFast,velocityUnits::pct);
+      rightDriveT.spin(forward,howFast,velocityUnits::pct);
     }
   }
 }
 
-//Turning left function
-void turnL(int turnLD,int turnLS)
+//Turning 
+void turnD(int turnD)
 {
-  IneSen.resetRotation();
-  while(fabs(IneSen.rotation(degrees)) < -turnLD)
-  {
-    rightDrive.spin(reverse,turnLS,velocityUnits::pct);
-    leftDrive.spin(forward,turnLS,velocityUnits::pct);
-  }
-  rightDrive.stop(brake);
-  leftDrive.stop(brake);
-}
+ IneSen.resetRotation();
+ while(fabs(IneSen.rotation(degrees)) < turnD)
+ {
+   //Grabs rotation for slow down
+   int slowMo = IneSen.rotation(degrees);
 
-//Turning right function
-void turnR(int turnLD,int turnLS)
-{
-  IneSen.resetRotation();
-  while(fabs(IneSen.rotation(degrees)) < -turnLD)
-  {
-    rightDrive.spin(forward,turnLS,velocityUnits::pct);
-    leftDrive.spin(reverse,turnLS,velocityUnits::pct);
-  }
-  rightDrive.stop(brake);
-  leftDrive.stop(brake);
+   //Slows down the robot
+   int turnS = (1 - slowMo/turnD)*100;
+
+   //Turn Right
+   if(turnD > 0)
+   {
+     leftDriveT.spin(fwd,turnS,velocityUnits::pct);
+     rightDriveT.spin(reverse,turnS,velocityUnits::pct);
+   }
+
+   //Turn Left
+   else
+   {
+     leftDriveT.spin(fwd,turnS,velocityUnits::pct);
+     rightDriveT.spin(reverse,turnS,velocityUnits::pct);
+   }
+ }
+ leftDriveT.stop(brake);
+ rightDriveT.stop(brake);
 }
 
 
@@ -74,20 +88,16 @@ int main()
 {
  // Initializing Robot Configuration. DO NOT REMOVE!
  vexcodeInit();
+
  //Calibrate
- while (IneSen.isCalibrating())
- {
-   wait (50,msec);
- }
+ IneSen.calibrate();
+ waitUntil(!IneSen.isCalibrating());
+
  //Sets Inertial Sensor to 0 degrees
+ task MyTask1 = task(information);
  IneSen.setHeading(0,degrees);
- //Rests left and right rotation
- rightDrive.resetPosition();
- leftDrive.resetPosition();
  
  //Actual Drive Portion
- while (1)
- {
-   moveFWD(343*5,15);
- }
+ moveFWD(360,10);
+ turnD(90);
 }

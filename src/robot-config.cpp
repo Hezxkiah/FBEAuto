@@ -10,14 +10,15 @@ brain  Brain;
 // VEXcode device constructors
 motor IntakeMotor = motor(PORT6, ratio18_1, false);
 controller Controller1 = controller(primary);
-motor leftFrontM = motor(PORT1, ratio18_1, false);
-motor leftBackM = motor(PORT2, ratio18_1, false);
-motor rightFrontM = motor(PORT3, ratio18_1, true);
-motor rightBackM = motor(PORT4, ratio18_1, true);
-digital_out airFist = digital_out(Brain.ThreeWirePort.A);
-motor_group rightDrive(rightFrontM, rightBackM);
-motor_group leftDrive(leftBackM, leftFrontM);
-inertial IneSen = inertial(PORT10);
+digital_out airFirst = digital_out(Brain.ThreeWirePort.A);
+motor stakeMotor = motor(PORT21, ratio18_1, true);
+motor leftDriveTMotorA = motor(PORT1, ratio6_1, false);
+motor leftDriveTMotorB = motor(PORT2, ratio6_1, false);
+motor_group leftDriveT = motor_group(leftDriveTMotorA, leftDriveTMotorB);
+motor rightDriveTMotorA = motor(PORT9, ratio6_1, true);
+motor rightDriveTMotorB = motor(PORT10, ratio6_1, true);
+motor_group rightDriveT = motor_group(rightDriveTMotorA, rightDriveTMotorB);
+inertial IneSen = inertial(PORT20);
 
 // VEXcode generated functions
 bool RemoteControlCodeEnabled = true;
