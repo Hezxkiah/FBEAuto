@@ -10,6 +10,7 @@ extern motor stakeMotor;
 extern motor_group leftDriveT;
 extern motor_group rightDriveT;
 extern inertial IneSen;
+extern digital_out airFist;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

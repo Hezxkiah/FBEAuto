@@ -6,6 +6,8 @@ using namespace vex;
 
 int turnS;
 
+bool airOn;
+
 //Grabbing information
 int information()
 {
@@ -17,6 +19,33 @@ int information()
     Brain.Screen.setCursor(1,2);
     Brain.Screen.print("Heading: ",IneSen.heading(degrees));
   }
+}
+
+int airPump()
+{
+  while (1)
+  {
+    if (Controller1.ButtonR2.pressing())
+    {
+      if(airOn)
+      {
+        wait(0.5,sec);
+        airFist.set(true);
+        airOn = false;
+        wait(0.1,seconds);
+      }
+      
+      else
+      {
+        wait(0.5,sec);
+        airFist.set(false);
+        airOn = true;
+        wait(0.1,seconds);
+      }
+    }
+  }
+
+  return 0;
 }
 
 
@@ -97,7 +126,15 @@ int main()
  task MyTask1 = task(information);
  IneSen.setHeading(0,degrees);
  
- //Actual Drive Portion
+ //Drives To Stake & Clamps
+ IntakeMotor.spin(fwd);
+ //moveFWD(360*2,10);
+ airFist.set(true);
+
+ //Turns and Collects 2 Rings
+ turnD(45);
  moveFWD(360,10);
- turnD(90);
+ moveFWD(180,10);
+ turnD(45);
+ turnD(45);
 }
