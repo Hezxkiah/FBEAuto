@@ -1,8 +1,10 @@
 #include "vex.h"
 #include "math.h"
+#include <iostream>
 
 
 using namespace vex;
+using namespace std;
 
 int turnS;
 
@@ -21,6 +23,7 @@ int information()
   }
 }
 
+//Clamp
 int airPump()
 {
   while (1)
@@ -33,6 +36,7 @@ int airPump()
         airFist.set(true);
         airOn = false;
         wait(0.1,seconds);
+        cout << "Stake Clamped" << endl;
       }
       
       else
@@ -41,6 +45,7 @@ int airPump()
         airFist.set(false);
         airOn = true;
         wait(0.1,seconds);
+        cout << "Stake Unclamped" << endl;
       }
     }
   }
@@ -63,20 +68,58 @@ void moveFWD(int howFar,int howFast)
     //If vere left
     if((IneSen.rotation(degrees)) < 0 && (IneSen.rotation(degrees)) > -91)
     {
-      leftDriveT.spin(forward,5,velocityUnits::pct);
+      leftDriveT.spin(fwd,5,velocityUnits::pct);
       rightDriveT.spin(reverse,5,velocityUnits::pct);
+      cout << "Correct Left" << endl;
     }
     //If vere right
     else if ((IneSen.rotation(degrees)) > 0 && (IneSen.rotation(degrees)) < 91)
     {
       leftDriveT.spin(reverse,5,velocityUnits::pct);
-      rightDriveT.spin(forward,5,velocityUnits::pct);
+      rightDriveT.spin(fwd,5,velocityUnits::pct);
+      cout << "Corrected Right" << endl;
     }
     //Go Straight
     else
     {
-      leftDriveT.spin(forward,howFast,velocityUnits::pct);
-      rightDriveT.spin(forward,howFast,velocityUnits::pct);
+      leftDriveT.spin(fwd,howFast,velocityUnits::pct);
+      rightDriveT.spin(fwd,howFast,velocityUnits::pct);
+      cout << "Going Straight" << endl;
+    }
+  }
+}
+
+//Moving forward right gear train function
+void moveREV(int howFar,int howFast)
+{
+  //Resets the posistion of the right front and back motors
+  leftDriveT.resetPosition();
+  rightDriveT.resetPosition();
+
+  //Checks to make sure that the robot drives straight
+  while(rightDriveT.position(degrees) && leftDriveT.position(degrees) < howFar)
+  {
+    IneSen.resetRotation();
+    //If vere left
+    if((IneSen.rotation(degrees)) < 0 && (IneSen.rotation(degrees)) > -91)
+    {
+      leftDriveT.spin(fwd,5,velocityUnits::pct);
+      rightDriveT.spin(reverse,5,velocityUnits::pct);
+      cout << "Correct Left" << endl;
+    }
+    //If vere right
+    else if ((IneSen.rotation(degrees)) > 0 && (IneSen.rotation(degrees)) < 91)
+    {
+      leftDriveT.spin(reverse,5,velocityUnits::pct);
+      rightDriveT.spin(fwd,5,velocityUnits::pct);
+      cout << "Correct Right" << endl;
+    }
+    //Go Straight
+    else
+    {
+      leftDriveT.spin(reverse,howFast,velocityUnits::pct);
+      rightDriveT.spin(reverse,howFast,velocityUnits::pct);
+      cout << "Going Backwards" << endl;
     }
   }
 }
@@ -98,6 +141,7 @@ void turnD(int turnD)
    {
      leftDriveT.spin(fwd,turnS,velocityUnits::pct);
      rightDriveT.spin(reverse,turnS,velocityUnits::pct);
+     cout << "Turning Right" << endl;
    }
 
    //Turn Left
@@ -105,6 +149,7 @@ void turnD(int turnD)
    {
      leftDriveT.spin(fwd,turnS,velocityUnits::pct);
      rightDriveT.spin(reverse,turnS,velocityUnits::pct);
+     cout << "Turning Left" << endl;
    }
  }
  leftDriveT.stop(brake);
@@ -117,24 +162,28 @@ int main()
 {
  // Initializing Robot Configuration. DO NOT REMOVE!
  vexcodeInit();
-
  //Calibrate
  IneSen.calibrate();
  waitUntil(!IneSen.isCalibrating());
-
  //Sets Inertial Sensor to 0 degrees
  task MyTask1 = task(information);
  IneSen.setHeading(0,degrees);
- 
- //Drives To Stake & Clamps
- IntakeMotor.spin(fwd);
  //moveFWD(360*2,10);
  airFist.set(true);
-
- //Turns and Collects 2 Rings
+ //Drives To Stake & Clamps & Scores Match Load 1 Ring
+ IntakeMotor.spin(fwd);
+ //Turns and Collects 1 Ring
  turnD(45);
  moveFWD(360,10);
- moveFWD(180,10);
+ //Turns and Collects 2 Rings
  turnD(45);
+ moveFWD(360*3,50);
+ //Turn Right and Collect 1 Ring
+ turnD(90);
+ moveFWD(360,10);
+ //Turn Right 45 Degrees and Collect 2 Rings
  turnD(45);
+ moveFWD(360*2,50);
+ IntakeMotor.stop();
+ //Figure Out How to Score into Positive Corner
 }
