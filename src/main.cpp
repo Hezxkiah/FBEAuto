@@ -62,7 +62,7 @@ void turnD(int turnD)
    int slowMo = IneSen.rotation(degrees);
 
    //Slows down the robot
-   int turnS = (1 - slowMo/turnD)*100;
+   int turnS = (1 - slowMo/turnD)*10;
 
    //Turn Right
    if(turnD > 0)
