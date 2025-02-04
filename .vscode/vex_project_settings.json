@@ -1,7 +1,7 @@
 {
 	"project": {
 		"name": "FBEAuto",
-		"slot": 1,
+		"slot": 8,
 		"description": "Empty V5 C++ Project",
 		"platform": "V5",
 		"creationDate": "Sat, 19 Oct 2024 21:47:44 GMT",
