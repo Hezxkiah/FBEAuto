@@ -174,13 +174,13 @@ int main()
  IntakeMotor.spin(fwd);
  //Turns and Collects 1 Ring
  turnD(45);
- moveFWD(360,10);
+ moveFWD(360,50);
  //Turns and Collects 2 Rings
  turnD(45);
  moveFWD(360*3,50);
  //Turn Right and Collect 1 Ring
  turnD(90);
- moveFWD(360,10);
+ moveFWD(360,50);
  //Turn Right 45 Degrees and Collect 2 Rings
  turnD(45);
  moveFWD(360*2,50);
