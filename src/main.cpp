@@ -82,8 +82,8 @@ void moveFWD(int howFar,int howFast)
     //Go Straight
     else
     {
-      leftDriveT.spin(fwd,howFast,velocityUnits::pct);
-      rightDriveT.spin(fwd,howFast,velocityUnits::pct);
+      leftDriveT.spinFor(fwd,howFar,degrees,howFast,velocityUnits::pct,false);
+      rightDriveT.spinFor(fwd,howFar,degrees,howFast,velocityUnits::pct);
       cout << "Going Straight" << endl;
     }
   }
@@ -117,8 +117,8 @@ void moveREV(int howFar,int howFast)
     //Go Straight
     else
     {
-      leftDriveT.spin(reverse,howFast,velocityUnits::pct);
-      rightDriveT.spin(reverse,howFast,velocityUnits::pct);
+      leftDriveT.spinFor(reverse,howFar,degrees,howFast,velocityUnits::pct,false);
+      rightDriveT.spinFor(reverse,howFar,degrees,howFast,velocityUnits::pct);
       cout << "Going Backwards" << endl;
     }
   }
