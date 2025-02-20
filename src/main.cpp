@@ -68,15 +68,15 @@ void moveFWD(int howFar,int howFast)
     //If vere left
     if((IneSen.rotation(degrees)) < 0 && (IneSen.rotation(degrees)) > -91)
     {
-      leftDriveT.spin(fwd,5,velocityUnits::pct);
-      rightDriveT.spin(reverse,5,velocityUnits::pct);
+      leftDriveT.spinFor(fwd,1,degrees,5,velocityUnits::pct,false);
+      rightDriveT.spinFor(reverse,1,degrees,5,velocityUnits::pct);
       cout << "Correct Left" << endl;
     }
     //If vere right
     else if ((IneSen.rotation(degrees)) > 0 && (IneSen.rotation(degrees)) < 91)
     {
-      leftDriveT.spin(reverse,5,velocityUnits::pct);
-      rightDriveT.spin(fwd,5,velocityUnits::pct);
+      leftDriveT.spinFor(reverse,1,degrees,5,velocityUnits::pct,false);
+      rightDriveT.spinFor(fwd,1,degrees,5,velocityUnits::pct);
       cout << "Corrected Right" << endl;
     }
     //Go Straight
@@ -103,15 +103,15 @@ void moveREV(int howFar,int howFast)
     //If vere left
     if((IneSen.rotation(degrees)) < 0 && (IneSen.rotation(degrees)) > -91)
     {
-      leftDriveT.spin(fwd,5,velocityUnits::pct);
-      rightDriveT.spin(reverse,5,velocityUnits::pct);
+      leftDriveT.spinFor(fwd,1,degrees,5,velocityUnits::pct),false;
+      rightDriveT.spinFor(reverse,1,degrees,5,velocityUnits::pct);
       cout << "Correct Left" << endl;
     }
     //If vere right
     else if ((IneSen.rotation(degrees)) > 0 && (IneSen.rotation(degrees)) < 91)
     {
-      leftDriveT.spin(reverse,5,velocityUnits::pct);
-      rightDriveT.spin(fwd,5,velocityUnits::pct);
+      leftDriveT.spinFor(reverse,1,degrees,5,velocityUnits::pct,false);
+      rightDriveT.spinFor(fwd,1,degrees,5,velocityUnits::pct);
       cout << "Correct Right" << endl;
     }
     //Go Straight
