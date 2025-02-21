@@ -103,7 +103,7 @@ void moveREV(int howFar,int howFast)
     //If vere left
     if((IneSen.rotation(degrees)) < 0 && (IneSen.rotation(degrees)) > -91)
     {
-      leftDriveT.spinFor(fwd,1,degrees,5,velocityUnits::pct),false;
+      leftDriveT.spinFor(fwd,1,degrees,5,velocityUnits::pct,false);
       rightDriveT.spinFor(reverse,1,degrees,5,velocityUnits::pct);
       cout << "Correct Left" << endl;
     }
@@ -174,7 +174,9 @@ int main()
  IntakeMotor.spin(fwd);
  //Turns and Collects 1 Ring
  turnD(45);
- moveFWD(360,50);
+ leftDriveT.spinFor(fwd,360,degrees,50,velocityUnits::pct,false);
+ rightDriveT.spinFor(fwd,360,degrees,50,velocityUnits::pct,false);
+//  moveFWD(360,50);
  //Turns and Collects 2 Rings
  turnD(45);
  moveFWD(360*3,50);
